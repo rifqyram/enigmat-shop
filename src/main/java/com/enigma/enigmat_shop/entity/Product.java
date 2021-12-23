@@ -8,49 +8,34 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(
-        name = "mst_product"
-)
+@Table(name = "mst_product")
 public class Product {
+
     @Id
-    @GeneratedValue(
-            generator = "system-uuid"
-    )
-    @GenericGenerator(
-            name = "system-uuid",
-            strategy = "uuid"
-    )
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
     private String id;
-    @Column(
-            nullable = false
-    )
+
+    @Column(nullable = false)
     private String productName;
-    @Column(
-            nullable = false
-    )
+
+    @Column(nullable = false)
     private Integer productPrice;
-    @Column(
-            nullable = false
-    )
+
+    @Column(nullable = false)
     private Integer stock;
+
     @CreatedDate
-    @Column(
-            updatable = false
-    )
+    @Column(updatable = false)
     private Date createdAt;
+
     @LastModifiedDate
     private Date updatedAt;
 
     @PrePersist
     private void createdDate() {
-        if (this.createdAt == null) {
-            this.createdAt = new Date();
-        }
-
-        if (this.updatedAt == null) {
-            this.updatedAt = new Date();
-        }
-
+        if (this.createdAt == null) this.createdAt = new Date();
+        if (this.updatedAt == null) this.updatedAt = new Date();
     }
 
     @PreUpdate

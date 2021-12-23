@@ -24,7 +24,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     public Customer create(Customer customer) {
-        return (Customer)this.customerRepository.save(customer);
+        return (Customer) this.customerRepository.save(customer);
     }
 
     public Customer get(String id) {
@@ -54,7 +54,7 @@ public class CustomerServiceImpl implements CustomerService {
     private Customer findByIdOrThrowNotFound(String id) {
         Optional<Customer> customer = this.customerRepository.findById(id);
         if (customer.isPresent()) {
-            return (Customer)customer.get();
+            return customer.get();
         } else {
             throw new NotFoundException("Customer tidak ditemukan");
         }

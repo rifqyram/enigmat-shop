@@ -43,7 +43,7 @@ public class ProductServiceImpl implements ProductService {
 
     public Product update(Product product) {
         this.getById(product.getId());
-        return (Product)this.productRepository.save(product);
+        return this.productRepository.save(product);
     }
 
     public String delete(String id) {

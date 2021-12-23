@@ -15,7 +15,7 @@ public class ErrorController {
     @ExceptionHandler({NotFoundException.class})
     public ResponseEntity<Object> handleNotFoundException(NotFoundException exception) {
         HttpStatus status = HttpStatus.NOT_FOUND;
-        WebResponse<String> response = new WebResponse<String>(exception.getMessage(), null);
+        WebResponse<String> response = new WebResponse<>(exception.getMessage(), null);
         return new ResponseEntity<>(response, status);
     }
 }

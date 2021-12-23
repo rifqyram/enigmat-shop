@@ -24,8 +24,13 @@ public class CustomerController {
     }
 
     @PostMapping
-    public Customer createCustomer(@RequestBody Customer customer) {
-        return this.customerService.create(customer);
+    public ResponseEntity<WebResponse<Customer>> createCustomer(@RequestBody Customer request) {
+        Customer customer = this.customerService.create(request);
+        WebResponse<Customer> webResponse = new WebResponse<>("Successfully created new customer", customer);
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(webResponse);
     }
 
     @GetMapping({"/{customerId}"})
@@ -62,12 +67,22 @@ public class CustomerController {
     }
 
     @PutMapping
-    public Customer updateCustomerById(@RequestBody Customer customer) {
-        return this.customerService.update(customer);
+    public ResponseEntity<WebResponse<Customer>> updateCustomerById(@RequestBody Customer request) {
+        Customer update = this.customerService.update(request);
+        WebResponse<Customer> webResponse = new WebResponse<>("Successfully update customer", update);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(webResponse);
     }
 
     @DeleteMapping({"/{customerId}"})
-    public String deleteCustomerById(@PathVariable("customerId") String id) {
-        return this.customerService.delete(id);
+    public ResponseEntity<WebResponse<String>> deleteCustomerById(@PathVariable("customerId") String id) {
+        String message = this.customerService.delete(id);
+        WebResponse<String> webResponse = new WebResponse<>(message, id);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(webResponse);
     }
 }

@@ -9,9 +9,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(
-        name = "mst_customer"
-)
+@Table(name = "mst_customer")
 public class Customer {
     @Id
     @GeneratedValue(
@@ -149,4 +147,3 @@ public class Customer {
         this.updatedAt = updatedAt;
     }
 }
-
