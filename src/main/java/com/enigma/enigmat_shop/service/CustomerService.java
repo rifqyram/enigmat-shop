@@ -12,6 +12,8 @@ public interface CustomerService {
 
     Customer get(String id);
 
+    Customer getActiveCustomer(String id);
+
     List<Customer> list();
 
     Page<Customer> listWithPage(Pageable pageable, CustomerDTO customerDTO);

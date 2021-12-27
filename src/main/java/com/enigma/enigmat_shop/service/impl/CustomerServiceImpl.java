@@ -31,6 +31,11 @@ public class CustomerServiceImpl implements CustomerService {
         return this.findByIdOrThrowNotFound(id);
     }
 
+    @Override
+    public Customer getActiveCustomer(String id) {
+        return customerRepository.getActiveCustomer(id).orElseThrow(() -> new NotFoundException("Customer Not found"));
+    }
+
     public List<Customer> list() {
         return this.customerRepository.findAll();
     }
@@ -41,13 +46,18 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     public Customer update(Customer customer) {
-        this.findByIdOrThrowNotFound(customer.getId());
-        return customer;
+        findByIdOrThrowNotFound(customer.getId());
+        return customerRepository.save(customer);
     }
 
     public String delete(String id) {
         Customer customer = this.findByIdOrThrowNotFound(id);
-        this.customerRepository.delete(customer);
+        if (customer.getDeleted()) {
+            throw new NotFoundException("Customer not found");
+        }
+        customer.setDeleted(true);
+
+        customerRepository.save(customer);
         return "Customer berhasil terhapus";
     }
 

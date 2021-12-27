@@ -12,39 +12,32 @@ import java.util.Date;
 @Table(name = "mst_customer")
 public class Customer {
     @Id
-    @GeneratedValue(
-            generator = "system-uuid"
-    )
-    @GenericGenerator(
-            name = "system-uuid",
-            strategy = "uuid"
-    )
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+
     private String id;
-    @Column(
-            nullable = false
-    )
+    @Column(nullable = false)
+
     private String name;
-    @Column(
-            nullable = false
-    )
+
+    @Column(nullable = false)
     private String address;
-    @Column(
-            nullable = false
-    )
+
+    @Column(nullable = false)
     private String phoneNumber;
-    @JsonFormat(
-            pattern = "yyyy-MM-dd"
-    )
-    @Column(
-            nullable = false
-    )
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Column(nullable = false)
     private Date birthDate;
+
     private Boolean status;
+
+    private Boolean isDeleted;
+
     @CreatedDate
-    @Column(
-            updatable = false
-    )
+    @Column(updatable = false)
     private Date createdAt;
+
     @LastModifiedDate
     private Date updatedAt;
 
@@ -62,6 +55,7 @@ public class Customer {
             this.updatedAt = new Date();
         }
 
+        if (isDeleted == null) isDeleted = false;
     }
 
     @PreUpdate
@@ -129,6 +123,14 @@ public class Customer {
 
     public void setStatus(Boolean status) {
         this.status = status;
+    }
+
+    public Boolean getDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        isDeleted = deleted;
     }
 
     public Date getCreatedAt() {

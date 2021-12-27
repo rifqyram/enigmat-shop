@@ -11,7 +11,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.security.RolesAllowed;
 
 @RestController
 @RequestMapping({"/customers"})
@@ -35,7 +38,8 @@ public class CustomerController {
 
     @GetMapping({"/{customerId}"})
     public ResponseEntity<WebResponse<Customer>> getById(@PathVariable("customerId") String id) {
-        Customer customer = this.customerService.get(id);
+//        Customer customer = this.customerService.get(id);
+        Customer customer = customerService.getActiveCustomer(id);
         WebResponse<Customer> response = new WebResponse<>(String.format("Customer with id %s found", id), customer);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
@@ -77,6 +81,7 @@ public class CustomerController {
     }
 
     @DeleteMapping({"/{customerId}"})
+    @RolesAllowed("ADMIN_ROLE")
     public ResponseEntity<WebResponse<String>> deleteCustomerById(@PathVariable("customerId") String id) {
         String message = this.customerService.delete(id);
         WebResponse<String> webResponse = new WebResponse<>(message, id);
