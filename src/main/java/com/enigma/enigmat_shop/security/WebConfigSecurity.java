@@ -57,7 +57,7 @@ public class WebConfigSecurity extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
                 .antMatchers("/auth/**").permitAll()
-                // Untuk mengizinkan API endpoint digunakan tanpa login
+                // Untuk mengizinkan API endpoint digunakan tanpa token
                 .antMatchers(HttpMethod.GET, "/products").permitAll()
                 .anyRequest().authenticated();
         http.addFilterBefore(authTokenFilter(), UsernamePasswordAuthenticationFilter.class);
