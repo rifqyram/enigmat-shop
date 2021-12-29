@@ -65,6 +65,7 @@ public class WebConfigSecurity extends WebSecurityConfigurerAdapter {
                         "/swagger-ui.html",
                         "/swagger-ui/**",
                         "/webjars/**").permitAll()
+                        .antMatchers(HttpMethod.GET, "/files/**").permitAll()
                 // Untuk mengizinkan API endpoint digunakan tanpa token
                 .antMatchers(HttpMethod.GET, "/products").permitAll()
                 .anyRequest().authenticated();
